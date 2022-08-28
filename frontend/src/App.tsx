@@ -1,11 +1,15 @@
-import './App.css';
+import { AddTodo, Container, List, Navigation } from './components';
 
 function App() {
   return (
     <div className='App'>
-      <h1 className='text-3xl text-red-500 font-bold underline'>
-        Hello world!
-      </h1>
+      <Navigation />
+      <Container>
+        <>
+          <AddTodo />
+          <List />
+        </>
+      </Container>
     </div>
   );
 }

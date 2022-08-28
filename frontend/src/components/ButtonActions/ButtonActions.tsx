@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
+import { Button } from '..';
+import { ButtonActionsType } from '../../types';
 
-const ButtonActions = () => {
-  return <div>ButtonActions</div>;
-};
+const ButtonActions: FC<ButtonActionsType> = ({ buttonType, todo }) => (
+  <>
+    <Button buttonType={buttonType} todo={todo} />
+    <Button buttonType='delete' todo={todo} />
+  </>
+);
 
 export default ButtonActions;

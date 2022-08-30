@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User as UserModel } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -9,7 +17,11 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param('id') id: UserModel['id']): Promise<UserModel> {
-    return this.userService.findOne({ id: Number(id) });
+    const user = await this.userService.findOne({ id: Number(id) });
+
+    if (!user) throw new HttpException('No user found', HttpStatus.NOT_FOUND);
+
+    return user;
   }
 
   @Get()

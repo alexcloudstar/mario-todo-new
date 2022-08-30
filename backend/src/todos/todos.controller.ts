@@ -4,6 +4,8 @@ import {
   Delete,
   Get,
   HttpCode,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -79,7 +81,7 @@ export class TodosController {
   ): Promise<TodoModel[] | any> {
     const todo = await this.todosService.findOne({ id: Number(id) });
 
-    if (!todo) throw new Error('Nothing found');
+    if (!todo) throw new HttpException('No todo found', HttpStatus.NOT_FOUND);
 
     if (todo?.authorUsername !== createTodoDto.authorUsername)
       throw new Error('You are not authorized');

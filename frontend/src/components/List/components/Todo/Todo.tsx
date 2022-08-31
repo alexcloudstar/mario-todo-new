@@ -30,6 +30,8 @@ const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
     if (isEditable) inputRef.current?.focus();
   }, [isEditable]);
 
+  console.log(isEditable);
+
   return (
     <div className='border-b-2 border-r-2 border-gray-300 w-full flex'>
       {isEditable ? (

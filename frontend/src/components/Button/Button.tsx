@@ -1,13 +1,16 @@
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { useAddTodoMutation } from '../../store/services/todos';
-import { completeTodo, editTodo, removeTodo } from '../../store/todoReducer';
+import {
+  useAddTodoMutation,
+  useDeleteTodoMutation,
+  useUpdateTodoMutation,
+} from '../../store/services/todos';
 import { ButtonActionsType, TodoType } from '../../types';
 import ButtonIcon from './ButtonIcon';
 
 const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
-  const dispatch = useDispatch();
   const [addTodo] = useAddTodoMutation();
+  const [deleteTodo] = useDeleteTodoMutation();
+  const [updateTodo] = useUpdateTodoMutation();
 
   const isSubmit =
     buttonType === 'submit' ||
@@ -39,27 +42,39 @@ const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
     }
 
     if (typeOfButton === 'complete' && todo) {
-      dispatch(
-        completeTodo({
-          id: todo.id || '',
+      try {
+        await updateTodo({
+          id: todo.id,
+          authorUsername: 'some_random_username',
           isCompleted: !todo.isCompleted,
-        })
-      );
+        });
+      } catch (error) {
+        console.log(error);
+      }
       return;
     }
 
     if (typeOfButton === 'edit' && todo) {
-      dispatch(
-        editTodo({
-          id: todo.id || '',
-          title: todo.title ?? '',
+      try {
+        await updateTodo({
+          id: todo.id,
+          title: todo.title,
+          authorUsername: 'some_random_username',
           isCompleted: todo.isCompleted,
-        })
-      );
+        });
+      } catch (error) {
+        console.log(error);
+      }
+
       return;
     }
 
-    todo && dispatch(removeTodo(todo.id || ''));
+    try {
+      todo &&
+        deleteTodo({ id: todo.id, authorUsername: 'some_random_username' });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

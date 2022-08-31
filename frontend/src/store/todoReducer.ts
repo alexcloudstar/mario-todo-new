@@ -7,12 +7,12 @@ const initialState: TodoState = [
   {
     id: '0',
     title: 'Wash the car',
-    completed: false,
+    isCompleted: false,
   },
   {
     id: '1',
     title: 'Walk the dog',
-    completed: false,
+    isCompleted: false,
   },
 ];
 
@@ -27,7 +27,7 @@ export const todoSlice = createSlice({
       const index = state.findIndex((todo) => todo.id === action.payload.id);
 
       state[index].title = action.payload.title;
-      state[index].completed = action.payload.completed;
+      state[index].isCompleted = action.payload.isCompleted;
     },
     removeTodo: (state, action: PayloadAction<TodoType['id']>) => {
       const index = state.findIndex((todo) => todo.id === action.payload);
@@ -37,7 +37,7 @@ export const todoSlice = createSlice({
     completeTodo: (state, action: PayloadAction<Omit<TodoType, 'title'>>) => {
       const index = state.findIndex((todo) => todo.id === action.payload.id);
 
-      state[index].completed = action.payload.completed;
+      state[index].isCompleted = action.payload.isCompleted;
     },
   },
 });

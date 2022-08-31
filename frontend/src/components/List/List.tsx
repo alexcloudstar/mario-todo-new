@@ -1,16 +1,24 @@
 import { Fragment } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { useGetTodoByUserQuery } from '../../store/services/todos';
 import { Todo } from './components';
 
 const List = () => {
-  const todos = useSelector((state: RootState) => state.todo);
+  const { data, error, isLoading } = useGetTodoByUserQuery(
+    'some_random_username',
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
+
+  if ((!error && isLoading) || !data) return <div>Loading...</div>;
+
+  if (error) return <div>Get some error</div>;
 
   return (
     <div className='flex flex-col'>
-      {todos.map(({ id, title, completed }) => (
+      {data.map(({ id, title, isCompleted }) => (
         <Fragment key={title}>
-          <Todo id={id} title={title} completed={completed} />
+          <Todo id={id} title={title} isCompleted={isCompleted} />
         </Fragment>
       ))}
     </div>

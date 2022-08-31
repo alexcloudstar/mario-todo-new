@@ -10,7 +10,7 @@ const Input: FC<{
     setTodo({
       id: `${id.toFixed()}`,
       title: e.target.value,
-      completed: false,
+      isCompleted: false,
     });
 
   return (

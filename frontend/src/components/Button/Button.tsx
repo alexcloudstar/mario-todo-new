@@ -1,16 +1,14 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  addTodo,
-  completeTodo,
-  editTodo,
-  removeTodo,
-} from '../../store/todoReducer';
-import { ButtonActionsType } from '../../types';
+import { useAddTodoMutation } from '../../store/services/todos';
+import { completeTodo, editTodo, removeTodo } from '../../store/todoReducer';
+import { ButtonActionsType, TodoType } from '../../types';
 import ButtonIcon from './ButtonIcon';
 
 const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
   const dispatch = useDispatch();
+  const [addTodo] = useAddTodoMutation();
+
   const isSubmit =
     buttonType === 'submit' ||
     buttonType === 'complete' ||
@@ -20,12 +18,23 @@ const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
   }`;
   const btnClasses = `flex justify-center items-center p-4 border-b-2 border-r-2 border-gray-300 text-lg ${hoverClass} `;
 
-  const onClick = (
+  const onAddTodo = async (todo: TodoType) => {
+    try {
+      await addTodo({
+        ...todo,
+        authorUsername: 'some_random_username',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onClick = async (
     _: unknown,
     typeOfButton: ButtonActionsType['buttonType']
   ) => {
     if (typeOfButton === 'submit' && todo) {
-      dispatch(addTodo(todo));
+      await onAddTodo(todo);
       return;
     }
 
@@ -33,7 +42,7 @@ const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
       dispatch(
         completeTodo({
           id: todo.id || '',
-          completed: !todo.completed,
+          isCompleted: !todo.isCompleted,
         })
       );
       return;
@@ -44,7 +53,7 @@ const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
         editTodo({
           id: todo.id || '',
           title: todo.title ?? '',
-          completed: todo.completed,
+          isCompleted: todo.isCompleted,
         })
       );
       return;

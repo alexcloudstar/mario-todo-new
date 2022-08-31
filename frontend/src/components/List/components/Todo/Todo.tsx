@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { ButtonActions } from '../../..';
 import { type TodoType } from '../../../../types';
 
-const Todo: FC<TodoType> = ({ id, title, completed }) => {
+const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [updatedTodoTitle, setUpdatedTodoTitle] = useState<string>(title);
 
@@ -11,13 +11,13 @@ const Todo: FC<TodoType> = ({ id, title, completed }) => {
   const classes = `border-0 ${
     isEditable ? 'text-green-700' : 'text-gray-700'
   } text-lg outline-0 block w-full p-2.5 ${
-    completed && !isEditable ? 'line-through' : ''
+    isCompleted && !isEditable ? 'line-through' : ''
   }`;
 
   const todo = {
     id,
     title: updatedTodoTitle,
-    completed,
+    isCompleted,
   };
 
   const onSetIsEditable = () => setIsEditable(!isEditable);

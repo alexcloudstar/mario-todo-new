@@ -22,15 +22,12 @@ const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
 
   const onSetIsEditable = () => setIsEditable(!isEditable);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setUpdatedTodoTitle(e.target.value);
-  };
 
   useEffect(() => {
     if (isEditable) inputRef.current?.focus();
   }, [isEditable]);
-
-  console.log(isEditable);
 
   return (
     <div className='border-b-2 border-r-2 border-gray-300 w-full flex'>
@@ -40,7 +37,6 @@ const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
           id={id}
           className={classes}
           placeholder={title}
-          onBlur={onSetIsEditable}
           onChange={onChange}
           ref={inputRef}
           value={updatedTodoTitle}

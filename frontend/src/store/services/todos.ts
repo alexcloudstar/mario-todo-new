@@ -7,7 +7,7 @@ type MUTATION_ARGS = {
   id: TodoType['id'];
   title?: string;
   authorUsername: TodoType['authorUsername'];
-  isCompleted: TodoType['isCompleted'];
+  isCompleted?: TodoType['isCompleted'];
 };
 
 export const todosAPI = createApi({

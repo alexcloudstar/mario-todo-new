@@ -19,7 +19,7 @@ const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
   const hoverClass = `${
     isSubmit ? 'hover:text-green-500' : 'hover:text-red-500'
   }`;
-  const btnClasses = `flex justify-center items-center p-4 border-b-2 border-r-2 border-gray-300 text-lg ${hoverClass} `;
+  const btnClasses = `button flex justify-center items-center p-4 border-b-2 border-r-2 border-gray-300 text-lg ${hoverClass} `;
 
   const onClick = async (
     _: unknown,

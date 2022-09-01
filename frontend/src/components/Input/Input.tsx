@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { TodoType } from '../../types';
 
 const Input: FC<{
@@ -6,12 +6,16 @@ const Input: FC<{
   setTodo: React.Dispatch<React.SetStateAction<TodoType | undefined>>;
 }> = ({ todo, setTodo }) => {
   const id = Math.random() * 100;
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setTodo({
-      id: `${id.toFixed()}`,
-      title: e.target.value,
-      isCompleted: false,
-    });
+  const onChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setTodo({
+        id: `${id.toFixed()}`,
+        title: e.target.value,
+        isCompleted: false,
+      });
+    },
+    [id, setTodo]
+  );
 
   return (
     <div className='border-b-2 border-r-2 border-gray-300 w-full'>

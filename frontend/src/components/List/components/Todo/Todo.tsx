@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { ButtonActions } from '../../..';
 import { type TodoType } from '../../../../types';
 
@@ -30,7 +30,7 @@ const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
   }, [isEditable]);
 
   return (
-    <div className='border-b-2 border-r-2 border-gray-300 w-full flex'>
+    <div className=' w-full flex'>
       {isEditable ? (
         <input
           type='text'
@@ -42,7 +42,10 @@ const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
           value={updatedTodoTitle}
         />
       ) : (
-        <span className={`${classes} cursor-pointer`} onClick={onSetIsEditable}>
+        <span
+          className={`${classes} cursor-pointer border-b-2 border-r-2 border-gray-300`}
+          onClick={onSetIsEditable}
+        >
           {updatedTodoTitle}
         </span>
       )}

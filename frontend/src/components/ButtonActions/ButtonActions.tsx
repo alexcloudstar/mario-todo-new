@@ -2,10 +2,18 @@ import React, { FC } from 'react';
 import { Button } from '..';
 import { ButtonActionsType } from '../../types';
 
-const ButtonActions: FC<ButtonActionsType> = ({ buttonType, todo }) => (
+const ButtonActions: FC<ButtonActionsType> = ({
+  buttonType,
+  todoId,
+  updatedTodoTitle,
+}) => (
   <>
-    <Button buttonType={buttonType} todo={todo} />
-    <Button buttonType='delete' todo={todo} />
+    <Button
+      buttonType={buttonType}
+      todoId={todoId}
+      updatedTodoTitle={updatedTodoTitle}
+    />
+    <Button buttonType='clear' todoId={todoId} />
   </>
 );
 

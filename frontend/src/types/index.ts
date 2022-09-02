@@ -5,6 +5,7 @@ export type TodoType = {
   authorUsername?: string;
 };
 export type ButtonActionsType = {
-  buttonType: 'submit' | 'delete' | 'complete' | 'edit';
-  todo?: TodoType;
+  buttonType: 'submit' | 'delete' | 'complete' | 'edit' | 'clear';
+  todoId: string;
+  updatedTodoTitle?: string;
 };

@@ -15,7 +15,7 @@ const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
   }`;
 
   const todo = {
-    id,
+    id: id || '0',
     title: updatedTodoTitle,
     isCompleted,
   };
@@ -36,6 +36,7 @@ const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
           type='text'
           id={id}
           className={classes}
+          onBlur={onSetIsEditable}
           placeholder={title}
           onChange={onChange}
           ref={inputRef}
@@ -51,7 +52,8 @@ const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
       )}
       <ButtonActions
         buttonType={isEditable ? 'edit' : 'complete'}
-        todo={todo}
+        todoId={todo.id.toString()}
+        updatedTodoTitle={updatedTodoTitle}
       />
     </div>
   );

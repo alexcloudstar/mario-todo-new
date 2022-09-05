@@ -10,7 +10,6 @@ const Modal = () => {
     setUsername(e.target.value);
 
   const onClick = () => {
-    console.log(username);
     setUser(username);
     setShowModal(false);
   };

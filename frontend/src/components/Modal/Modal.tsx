@@ -6,20 +6,23 @@ const Modal = () => {
   const user = getUser();
   const [showModal, setShowModal] = useState(!user);
   const [username, setUsername] = useState<string>(user || '');
-  const [addUser] = useAddUserMutation();
+  const [addUser, { error }] = useAddUserMutation();
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+  const errorMessage = error?.data?.error;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setUsername(e.target.value);
 
   const onClick = async () => {
-    // setUser(username);
-    // setShowModal(false);
+    if (errorMessage) return;
 
-    try {
-      await addUser(username);
-    } catch (error) {
-      console.log(error);
-    }
+    setUser(username);
+    setShowModal(false);
+
+    await addUser(username);
   };
 
   return (
@@ -45,6 +48,13 @@ const Modal = () => {
                   </button>
                 </div>
                 {/*body*/}
+                {errorMessage && (
+                  <div className='flex justify-center items-center mt-6'>
+                    <span className='text-red-500 font-medium	'>
+                      {errorMessage}
+                    </span>
+                  </div>
+                )}
                 <div className='relative p-3 my-6 mx-6 flex-auto border-2 border-gray-300'>
                   <input
                     type='text'

@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
+import { useAddUserMutation } from '../../store/services/users';
 import { getUser, setUser } from '../../utils';
 
 const Modal = () => {
   const user = getUser();
   const [showModal, setShowModal] = useState(!user);
   const [username, setUsername] = useState<string>(user || '');
+  const [addUser] = useAddUserMutation();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setUsername(e.target.value);
 
-  const onClick = () => {
-    setUser(username);
-    setShowModal(false);
+  const onClick = async () => {
+    // setUser(username);
+    // setShowModal(false);
+
+    try {
+      await addUser(username);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

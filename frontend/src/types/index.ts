@@ -9,3 +9,8 @@ export type ButtonActionsType = {
   todoId: string;
   updatedTodoTitle?: string;
 };
+
+export type UserType = {
+  username: string;
+  todos?: TodoType[];
+};

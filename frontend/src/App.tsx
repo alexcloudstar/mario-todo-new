@@ -1,8 +1,9 @@
-import { AddTodo, Container, List, Navigation } from './components';
+import { AddTodo, Container, List, Modal, Navigation } from './components';
 
-function App() {
+const App = () => {
   return (
     <div className='App'>
+      <Modal />
       <Navigation />
       <Container>
         <>
@@ -12,6 +13,6 @@ function App() {
       </Container>
     </div>
   );
-}
+};
 
 export default App;

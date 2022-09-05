@@ -21,6 +21,7 @@ const ButtonIcon: FC<{
         </button>
       );
     case 'delete':
+    case 'clear':
       return (
         <button className={btnClasses} onClick={(_) => onClick(_, 'delete')}>
           <FaTimes />

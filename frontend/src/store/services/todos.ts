@@ -16,6 +16,10 @@ export const todosAPI = createApi({
   tagTypes: ['Todo'],
 
   endpoints: (builder) => ({
+    getTodoById: builder.query<TodoType, string>({
+      query: (id: string) => `/todos/${id}`,
+      providesTags: ['Todo'],
+    }),
     getTodoByUser: builder.query<TodoType[], string>({
       query: (name: string) => `/todos/user/${name}`,
       providesTags: ['Todo'],
@@ -57,6 +61,7 @@ export const todosAPI = createApi({
 });
 
 export const {
+  useGetTodoByIdQuery,
   useGetTodoByUserQuery,
   useAddTodoMutation,
   useDeleteTodoMutation,

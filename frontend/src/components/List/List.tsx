@@ -18,7 +18,7 @@ const List = () => {
   return (
     <div className='flex flex-col'>
       {todos.map(({ id, title, isCompleted }) => (
-        <Fragment key={title}>
+        <Fragment key={title + `${(Math.random() * 100).toFixed()}`}>
           <Todo id={id} title={title} isCompleted={isCompleted} />
         </Fragment>
       ))}

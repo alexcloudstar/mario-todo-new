@@ -2,15 +2,25 @@ import { FC } from 'react';
 import {
   useAddTodoMutation,
   useDeleteTodoMutation,
+  useGetTodoByIdQuery,
   useUpdateTodoMutation,
 } from '../../store/services/todos';
 import { ButtonActionsType } from '../../types';
+import { generateRandomId } from '../../utils';
 import ButtonIcon from './ButtonIcon';
 
-const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
+const Button: FC<ButtonActionsType> = ({
+  buttonType,
+  todoId,
+  updatedTodoTitle,
+}) => {
   const [addTodo] = useAddTodoMutation();
   const [deleteTodo] = useDeleteTodoMutation();
   const [updateTodo] = useUpdateTodoMutation();
+
+  const { data: todo, isLoading } = useGetTodoByIdQuery(
+    todoId || generateRandomId()
+  );
 
   const isSubmit =
     buttonType === 'submit' ||
@@ -25,11 +35,12 @@ const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
     _: unknown,
     typeOfButton: ButtonActionsType['buttonType']
   ) => {
-    if (typeOfButton === 'submit' && todo) {
+    if (typeOfButton === 'submit') {
       try {
         await addTodo({
-          ...todo,
+          title: updatedTodoTitle || 'Got some error',
           authorUsername: 'some_random_username',
+          isCompleted: false,
         });
       } catch (error) {
         console.log(error);
@@ -37,22 +48,25 @@ const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
       return;
     }
 
-    if (typeOfButton === 'complete' && todo) {
+    if (typeOfButton === 'complete') {
       try {
-        await updateTodo({
-          id: todo.id,
-          authorUsername: 'some_random_username',
-          isCompleted: !todo.isCompleted,
-        });
+        !isLoading &&
+          todo &&
+          (await updateTodo({
+            id: todo?.id,
+            authorUsername: 'some_random_username',
+            isCompleted: !todo?.isCompleted,
+          }));
       } catch (error) {
         console.log(error);
       }
       return;
     }
 
-    if (typeOfButton === 'delete' && todo) {
+    if (typeOfButton === 'delete') {
       try {
-        todo &&
+        !isLoading &&
+          todo &&
           deleteTodo({ id: todo.id, authorUsername: 'some_random_username' });
       } catch (error) {
         console.log(error);
@@ -65,7 +79,7 @@ const Button: FC<ButtonActionsType> = ({ buttonType, todo }) => {
       todo &&
         (await updateTodo({
           id: todo.id,
-          title: todo.title,
+          title: updatedTodoTitle,
           authorUsername: 'some_random_username',
         }));
     } catch (error) {

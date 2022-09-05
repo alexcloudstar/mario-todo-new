@@ -6,6 +6,7 @@ import {
   useUpdateTodoMutation,
 } from '../../store/services/todos';
 import { ButtonActionsType } from '../../types';
+import { generateRandomId } from '../../utils';
 import ButtonIcon from './ButtonIcon';
 
 const Button: FC<ButtonActionsType> = ({
@@ -17,7 +18,9 @@ const Button: FC<ButtonActionsType> = ({
   const [deleteTodo] = useDeleteTodoMutation();
   const [updateTodo] = useUpdateTodoMutation();
 
-  const { data: todo, isLoading } = useGetTodoByIdQuery(todoId);
+  const { data: todo, isLoading } = useGetTodoByIdQuery(
+    todoId || generateRandomId()
+  );
 
   const isSubmit =
     buttonType === 'submit' ||
@@ -32,12 +35,6 @@ const Button: FC<ButtonActionsType> = ({
     _: unknown,
     typeOfButton: ButtonActionsType['buttonType']
   ) => {
-    if (typeOfButton === 'clear') {
-      updatedTodoTitle = '';
-
-      return;
-    }
-
     if (typeOfButton === 'submit') {
       try {
         await addTodo({
@@ -51,14 +48,14 @@ const Button: FC<ButtonActionsType> = ({
       return;
     }
 
-    if (typeOfButton === 'complete' && todo) {
+    if (typeOfButton === 'complete') {
       try {
         !isLoading &&
           todo &&
           (await updateTodo({
-            id: todo.id,
+            id: todo?.id,
             authorUsername: 'some_random_username',
-            isCompleted: !todo.isCompleted,
+            isCompleted: !todo?.isCompleted,
           }));
       } catch (error) {
         console.log(error);
@@ -66,7 +63,7 @@ const Button: FC<ButtonActionsType> = ({
       return;
     }
 
-    if (typeOfButton === 'delete' && todo) {
+    if (typeOfButton === 'delete') {
       try {
         !isLoading &&
           todo &&
@@ -82,7 +79,7 @@ const Button: FC<ButtonActionsType> = ({
       todo &&
         (await updateTodo({
           id: todo.id,
-          title: todo.title,
+          title: updatedTodoTitle,
           authorUsername: 'some_random_username',
         }));
     } catch (error) {

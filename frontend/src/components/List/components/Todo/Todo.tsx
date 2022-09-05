@@ -36,7 +36,6 @@ const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
           type='text'
           id={id}
           className={classes}
-          onBlur={onSetIsEditable}
           placeholder={title}
           onChange={onChange}
           ref={inputRef}

@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { useGetTodoByUserQuery } from '../../store/services/todos';
+import { getUser } from '../../utils';
 import { Todo } from './components';
 
 const List = () => {
@@ -7,7 +8,7 @@ const List = () => {
     data: todos,
     error,
     isLoading,
-  } = useGetTodoByUserQuery('some_random_username', {
+  } = useGetTodoByUserQuery(getUser() || 'no_username', {
     refetchOnMountOrArgChange: true,
   });
 

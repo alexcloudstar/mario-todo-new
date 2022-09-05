@@ -6,7 +6,7 @@ import {
   useUpdateTodoMutation,
 } from '../../store/services/todos';
 import { ButtonActionsType } from '../../types';
-import { generateRandomId } from '../../utils';
+import { generateRandomId, getUser } from '../../utils';
 import ButtonIcon from './ButtonIcon';
 
 const Button: FC<ButtonActionsType> = ({
@@ -31,6 +31,8 @@ const Button: FC<ButtonActionsType> = ({
   }`;
   const btnClasses = `button flex justify-center items-center p-4 border-b-2 border-r-2 border-gray-300 text-lg ${hoverClass} `;
 
+  const authorUsername = getUser() || 'no_username';
+
   const onClick = async (
     _: unknown,
     typeOfButton: ButtonActionsType['buttonType']
@@ -39,7 +41,7 @@ const Button: FC<ButtonActionsType> = ({
       try {
         await addTodo({
           title: updatedTodoTitle || 'Got some error',
-          authorUsername: 'some_random_username',
+          authorUsername,
           isCompleted: false,
         });
       } catch (error) {
@@ -54,7 +56,7 @@ const Button: FC<ButtonActionsType> = ({
           todo &&
           (await updateTodo({
             id: todo?.id,
-            authorUsername: 'some_random_username',
+            authorUsername,
             isCompleted: !todo?.isCompleted,
           }));
       } catch (error) {
@@ -67,7 +69,10 @@ const Button: FC<ButtonActionsType> = ({
       try {
         !isLoading &&
           todo &&
-          deleteTodo({ id: todo.id, authorUsername: 'some_random_username' });
+          deleteTodo({
+            id: todo.id,
+            authorUsername,
+          });
       } catch (error) {
         console.log(error);
       }
@@ -80,7 +85,7 @@ const Button: FC<ButtonActionsType> = ({
         (await updateTodo({
           id: todo.id,
           title: updatedTodoTitle,
-          authorUsername: 'some_random_username',
+          authorUsername,
         }));
     } catch (error) {
       console.log(error);

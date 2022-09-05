@@ -33,7 +33,9 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<UserModel> {
-    const user = this.findOne(createUserDto.username);
+    const user = await this.userService.findOne({
+      username: createUserDto.username,
+    });
 
     if (user)
       throw new HttpException(

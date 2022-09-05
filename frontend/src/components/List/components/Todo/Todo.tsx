@@ -9,7 +9,7 @@ const Todo: FC<TodoType> = ({ id, title, isCompleted }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const classes = `border-0 ${
-    isEditable ? 'text-green-700' : 'text-gray-700'
+    isEditable ? 'text-green-700 border-2' : 'text-gray-700'
   } text-lg outline-0 block w-full p-2.5 ${
     isCompleted && !isEditable ? 'line-through' : ''
   }`;

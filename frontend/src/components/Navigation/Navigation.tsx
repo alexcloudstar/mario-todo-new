@@ -11,7 +11,9 @@ const Navigation = (): JSX.Element => {
           <img src={Logo} alt='Mario Todo' className='w-10 pr-2' />
           <h1 className='text-2xl text-green-700 uppercase font-bold'>Todo</h1>
         </a>
-        <h5 className='mr-5'>{user}</h5>
+        <div className=' bg-slate-100/[0.4] flex justify-center items-center px-12 rounded mr-5 cursor-pointer transition-all	 hover:bg-slate-100/[0.6]'>
+          <h5 className='text-white'>{user}</h5>
+        </div>
       </div>
     </>
   );

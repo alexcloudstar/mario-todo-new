@@ -8,6 +8,7 @@ export type ButtonActionsType = {
   buttonType: 'submit' | 'delete' | 'complete' | 'edit' | 'clear';
   todoId: string;
   updatedTodoTitle?: string;
+  setTodo?: React.Dispatch<React.SetStateAction<TodoType | undefined>>;
 };
 
 export type UserType = {

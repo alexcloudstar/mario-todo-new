@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ButtonActions, Input } from '..';
 import { TodoType } from '../../types';
 
@@ -12,6 +12,7 @@ const AddTodo = () => {
         todoId={todo?.id || '100'}
         updatedTodoTitle={todo?.title}
         buttonType='submit'
+        setTodo={setTodo}
       />
     </div>
   );

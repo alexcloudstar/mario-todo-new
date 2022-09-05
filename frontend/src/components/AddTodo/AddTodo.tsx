@@ -12,6 +12,7 @@ const AddTodo = () => {
         todoId={todo?.id || '100'}
         updatedTodoTitle={todo?.title}
         buttonType='submit'
+        setTodo={setTodo}
       />
     </div>
   );

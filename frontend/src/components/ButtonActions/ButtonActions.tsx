@@ -6,14 +6,16 @@ const ButtonActions: FC<ButtonActionsType> = ({
   buttonType,
   todoId,
   updatedTodoTitle,
+  setTodo,
 }) => (
   <>
     <Button
       buttonType={buttonType}
       todoId={todoId}
       updatedTodoTitle={updatedTodoTitle}
+      setTodo={setTodo}
     />
-    <Button buttonType='clear' todoId={todoId} />
+    <Button buttonType='clear' todoId={todoId} setTodo={setTodo} />
   </>
 );
 export default ButtonActions;

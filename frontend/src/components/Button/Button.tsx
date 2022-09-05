@@ -13,6 +13,7 @@ const Button: FC<ButtonActionsType> = ({
   buttonType,
   todoId,
   updatedTodoTitle,
+  setTodo,
 }) => {
   const [addTodo] = useAddTodoMutation();
   const [deleteTodo] = useDeleteTodoMutation();
@@ -44,6 +45,7 @@ const Button: FC<ButtonActionsType> = ({
           authorUsername,
           isCompleted: false,
         });
+        setTodo && setTodo({ title: '', isCompleted: false });
       } catch (error) {
         console.log(error);
       }
@@ -78,6 +80,10 @@ const Button: FC<ButtonActionsType> = ({
       }
 
       return;
+    }
+
+    if (buttonType === 'clear') {
+      return setTodo && setTodo({ title: '', isCompleted: false });
     }
 
     try {

@@ -15,9 +15,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @Get(':id')
-  async findOne(@Param('id') id: UserModel['id']): Promise<UserModel> {
-    const user = await this.userService.findOne({ id: Number(id) });
+  @Get(':username')
+  async findOne(
+    @Param('username') username: UserModel['username'],
+  ): Promise<UserModel> {
+    const user = await this.userService.findOne({ username: username });
 
     if (!user) throw new HttpException('No user found', HttpStatus.NOT_FOUND);
 
@@ -31,6 +33,16 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<UserModel> {
+    const user = await this.userService.findOne({
+      username: createUserDto.username,
+    });
+
+    if (user)
+      throw new HttpException(
+        { status: HttpStatus.BAD_REQUEST, error: 'This username is taken' },
+        HttpStatus.BAD_REQUEST,
+      );
+
     return this.userService.createUser(createUserDto);
   }
 }

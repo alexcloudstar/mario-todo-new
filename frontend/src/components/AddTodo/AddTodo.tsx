@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ButtonActions, Input } from '..';
 import { TodoType } from '../../types';
 
@@ -8,7 +8,12 @@ const AddTodo = () => {
   return (
     <div className='flex'>
       <Input todo={todo?.title || ''} setTodo={setTodo} />
-      <ButtonActions todo={todo} buttonType='submit' />
+      <ButtonActions
+        todoId={todo?.id || '100'}
+        updatedTodoTitle={todo?.title}
+        buttonType='submit'
+        setTodo={setTodo}
+      />
     </div>
   );
 };

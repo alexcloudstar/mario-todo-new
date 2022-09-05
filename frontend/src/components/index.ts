@@ -5,3 +5,4 @@ export { Input } from './Input';
 export { ButtonActions } from './ButtonActions';
 export { Container } from './Container';
 export { AddTodo } from './AddTodo';
+export { Modal } from './Modal';

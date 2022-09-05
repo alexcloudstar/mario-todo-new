@@ -34,6 +34,8 @@ const Button: FC<ButtonActionsType> = ({
 
   const authorUsername = getUser() || 'no_username';
 
+  const canSubmit = !isLoading && todo;
+
   const onClick = async (
     _: unknown,
     typeOfButton: ButtonActionsType['buttonType']
@@ -53,48 +55,45 @@ const Button: FC<ButtonActionsType> = ({
     }
 
     if (typeOfButton === 'complete') {
-      try {
-        !isLoading &&
-          todo &&
-          (await updateTodo({
+      if (canSubmit) {
+        try {
+          await updateTodo({
             id: todo?.id,
             authorUsername,
             isCompleted: !todo?.isCompleted,
-          }));
-      } catch (error) {
-        console.log(error);
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
       return;
     }
 
     if (typeOfButton === 'delete') {
-      try {
-        !isLoading &&
-          todo &&
-          deleteTodo({
+      if (canSubmit) {
+        try {
+          await deleteTodo({
             id: todo.id,
             authorUsername,
           });
-      } catch (error) {
-        console.log(error);
+        } catch (error) {
+          console.log(error);
+        }
       }
 
-      return;
-    }
-
-    if (buttonType === 'clear') {
       return setTodo && setTodo({ title: '', isCompleted: false });
     }
 
-    try {
-      todo &&
-        (await updateTodo({
+    if (todo) {
+      try {
+        await updateTodo({
           id: todo.id,
           title: updatedTodoTitle,
           authorUsername,
-        }));
-    } catch (error) {
-      console.log(error);
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

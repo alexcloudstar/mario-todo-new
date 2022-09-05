@@ -15,7 +15,7 @@ const ButtonActions: FC<ButtonActionsType> = ({
       updatedTodoTitle={updatedTodoTitle}
       setTodo={setTodo}
     />
-    <Button buttonType='clear' todoId={todoId} setTodo={setTodo} />
+    <Button buttonType='delete' todoId={todoId} setTodo={setTodo} />
   </>
 );
 export default ButtonActions;

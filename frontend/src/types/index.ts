@@ -5,7 +5,7 @@ export type TodoType = {
   authorUsername?: string;
 };
 export type ButtonActionsType = {
-  buttonType: 'submit' | 'delete' | 'complete' | 'edit' | 'clear';
+  buttonType: 'submit' | 'delete' | 'complete' | 'edit';
   todoId: string;
   updatedTodoTitle?: string;
   setTodo?: React.Dispatch<React.SetStateAction<TodoType | undefined>>;
